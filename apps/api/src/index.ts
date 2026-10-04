@@ -2,18 +2,28 @@ import dotenv from 'dotenv';
 import path from 'node:path';
 import fs from 'node:fs';
 import mongoose from 'mongoose';
-const envCandidates=[path.resolve(process.cwd(),'.env'),path.resolve(process.cwd(),'../../.env'),path.resolve(__dirname,'../../../.env')];
-const envPath=envCandidates.find(f=>fs.existsSync(f));
-if(!envPath) throw new Error('Root .env tidak ditemukan');
-dotenv.config({path:envPath});
-mongoose.set('autoIndex',false);
+
+const envCandidates = [
+  path.resolve(process.cwd(), '.env'),
+  path.resolve(process.cwd(), '../../.env'),
+  path.resolve(__dirname, '../../../.env')
+];
+
+const envPath = envCandidates.find(f => fs.existsSync(f));
+
+if (envPath) {
+  dotenv.config({ path: envPath });
+}
+
+mongoose.set('autoIndex', false);
+
 import express from 'express';
 import cors from 'cors';
 import session from 'express-session';
 import MongoStore from 'connect-mongo';
 import axios from 'axios';
 import cron from 'node-cron';
-import {z} from 'zod';
+import { z } from 'zod';
 
 const app=express();
 app.use(cors({origin:process.env.WEBSITE_URL||'http://localhost:5173',credentials:true}));
