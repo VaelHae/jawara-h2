@@ -1,10 +1,17 @@
 import dotenv from 'dotenv';
 import path from 'node:path';
 import fs from 'node:fs';
-const envCandidates=[path.resolve(process.cwd(),'.env'),path.resolve(process.cwd(),'../../.env'),path.resolve(__dirname,'../../../.env')];
-const envPath=envCandidates.find(f=>fs.existsSync(f));
-if(!envPath)throw new Error(`Root .env tidak ditemukan. Dicari di:\n${envCandidates.join('\n')}`);
-dotenv.config({path:envPath});
+const envCandidates = [
+  path.resolve(process.cwd(), '.env'),
+  path.resolve(process.cwd(), '../../.env'),
+  path.resolve(__dirname, '../../../.env')
+];
+
+const envPath = envCandidates.find(f => fs.existsSync(f));
+
+if (envPath) {
+  dotenv.config({ path: envPath });
+}
 import {Client,GatewayIntentBits,REST,Routes,SlashCommandBuilder,EmbedBuilder,type ChatInputCommandInteraction} from 'discord.js';
 import axios from 'axios';
 const token=process.env.DISCORD_TOKEN;
