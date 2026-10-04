@@ -3,7 +3,7 @@ import { createRoot } from 'react-dom/client';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './style.css';
 
-const API = import.meta.env.VITE_API_URL || 'http://localhost:3000';
+const API = import.meta.env.VITE_API_URL || 'http://api.reihakushiranui.bond';
 async function request(path, options = {}) { const r = await fetch(API + path, { credentials: 'include', ...options }); const data = await r.json().catch(() => ({})); if (!r.ok) throw new Error(data.error || data.message || `Request failed (${r.status})`); return data; }
 const get = path => request(path + (path.includes('?')?'&':'?') + '_ts=' + Date.now());
 const post = (path, body) => request(path, { method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify(body) });
