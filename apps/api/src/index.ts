@@ -25,7 +25,8 @@ import axios from 'axios';
 import cron from 'node-cron';
 import { z } from 'zod';
 
-const app=express();
+const app = express();
+app.set('trust proxy', 1);
 app.use(cors({origin:process.env.WEBSITE_URL||'http://localhost:5173',credentials:true}));
 app.use(express.json({limit:'1mb'}));
 app.use(session({secret:process.env.SESSION_SECRET||'dev-secret',resave:false,saveUninitialized:false,store:MongoStore.create({mongoUrl:process.env.MONGODB_URI}),cookie:{httpOnly:true,secure:process.env.COOKIE_SECURE==='true',sameSite:'lax'}}));
